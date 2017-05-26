@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "sourceMap":  true,
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+        //"noEmitOnError": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": false,
+        "strictNullChecks": true        
+    },
+    "compileOnSave": false
+}

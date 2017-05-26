@@ -1,0 +1,26 @@
+{
+  "name": "katas-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vivien Adnot",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jquery": "^2.0.34",
+    "@types/js-cookie": "^2.0.28",
+    "es6-promise": "^4.1.0",
+    "gulp": "^3.9.1",
+    "gulp-connect": "^5.0.0",
+    "jquery": "^3.1.1",
+    "js-cookie": "^2.1.4",
+    "merge": "^1.2.0",
+    "source-map-loader": "^0.1.5",
+    "ts-loader": "^1.2.0",
+    "typescript": "^2.0.9",
+    "webpack": "^1.13.2",
+    "webpack-stream": "^3.2.0"
+  }
+}
