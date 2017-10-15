@@ -46,17 +46,8 @@
 
 	"use strict";
 	exports.__esModule = true;
-	var binarySearch_1 = __webpack_require__(1);
-	var random_1 = __webpack_require__(2);
-	var random_2 = __webpack_require__(2);
-	var length = 5;
-	var array = random_1.generateRandomArray(length);
-	console.log(array.join());
-	var search = array[random_2.generateRandomNumber(length)];
-	console.log("searching for: " + search);
-	var result = binarySearch_1.binarySearch(array, search);
-	console.log("==================");
-	console.log(result);
+	var permuteString_1 = __webpack_require__(1);
+	permuteString_1.permuteString("bruno");
 
 
 /***/ }),
@@ -64,55 +55,48 @@
 /***/ (function(module, exports) {
 
 	"use strict";
+	//Design an algorithm to print all permutations of a string. For simplicity, assume all characters are unique.
 	exports.__esModule = true;
-	function binarySearch(array, element, startIndex, endIndex) {
-	    if (startIndex === void 0) { startIndex = 0; }
-	    if (endIndex === void 0) { endIndex = array.length - 1; }
-	    console.group(startIndex.toString());
-	    console.log("start binarySearch start " + startIndex + " end " + endIndex);
-	    if (endIndex < startIndex) {
-	        console.log("end " + endIndex + " < start " + startIndex + "\"");
-	        return -1;
+	function permuteString(source) {
+	    if (!source) {
+	        throw "provide a valid non-empty string please";
 	    }
-	    var middleIndex = Math.floor((startIndex + endIndex) / 2);
-	    console.log("middleIndex = " + middleIndex);
-	    if (element === array[middleIndex]) {
-	        console.log("return middle " + middleIndex);
-	        return middleIndex;
+	    if (source.length == 1) {
+	        console.log(source);
+	    }
+	    var subArray = source.split('');
+	    var newCharacter = subArray.pop();
+	    console.log("end merge", merge(newCharacter, subArray.join('')));
+	}
+	exports.permuteString = permuteString;
+	function merge(character, source) {
+	    console.log("start merge", character, source);
+	    var sourceArray = source.split('');
+	    var combinations;
+	    if (sourceArray.length > 1) {
+	        var newCharacter = sourceArray.pop();
+	        var subsetArray = sourceArray.join('');
+	        combinations = merge(newCharacter, subsetArray);
 	    }
 	    else {
-	        if (element < array[middleIndex]) {
-	            console.log("element " + element + " < array[middle] " + array[middleIndex]);
-	            return binarySearch(array, element, startIndex, middleIndex - 1);
-	        }
-	        else {
-	            console.log("element " + element + " >= array[middle] " + array[middleIndex]);
-	            return binarySearch(array, element, middleIndex + 1, endIndex);
-	        }
+	        console.log("stop digging", sourceArray);
+	        combinations = sourceArray;
 	    }
-	}
-	exports.binarySearch = binarySearch;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	exports.__esModule = true;
-	function generateRandomArray(length, maximumValue) {
 	    var result = [];
-	    maximumValue = maximumValue || 50;
-	    for (var i = 0; i < length; i++) {
-	        result.push(generateRandomNumber(maximumValue));
+	    for (var _i = 0, combinations_1 = combinations; _i < combinations_1.length; _i++) {
+	        var combination = combinations_1[_i];
+	        console.log("start working with combination", combination);
+	        var combinationArray = combination.split('');
+	        for (var i = 0; i < combinationArray.length; i++) {
+	            combinationArray.splice(i, 0, character);
+	            var r = combinationArray.join('');
+	            console.log("push", r);
+	            result.push(r);
+	        }
 	    }
 	    return result;
 	}
-	exports.generateRandomArray = generateRandomArray;
-	function generateRandomNumber(maximumValue) {
-	    return Math.floor(Math.random() * maximumValue);
-	}
-	exports.generateRandomNumber = generateRandomNumber;
+	exports.merge = merge;
 
 
 /***/ })
