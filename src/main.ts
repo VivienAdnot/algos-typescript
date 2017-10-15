@@ -1,4 +1,4 @@
-import { binarySearch} from "./katas/binarySearch";
+import { binarySearch} from "./algorithms/binarySearch";
 import { generateRandomArray } from "./_utils/random"
 import { generateRandomNumber } from "./_utils/random"
 

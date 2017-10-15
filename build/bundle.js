@@ -65,27 +65,29 @@
 
 	"use strict";
 	exports.__esModule = true;
-	function binarySearch(array, element, start, end) {
-	    if (start === void 0) { start = 0; }
-	    if (end === void 0) { end = array.length - 1; }
-	    console.log("start binarySearch start " + start + " end " + end);
-	    if (end < start) {
-	        console.log("end " + end + " < start " + start + "\"");
+	function binarySearch(array, element, startIndex, endIndex) {
+	    if (startIndex === void 0) { startIndex = 0; }
+	    if (endIndex === void 0) { endIndex = array.length - 1; }
+	    console.group(startIndex.toString());
+	    console.log("start binarySearch start " + startIndex + " end " + endIndex);
+	    if (endIndex < startIndex) {
+	        console.log("end " + endIndex + " < start " + startIndex + "\"");
 	        return -1;
 	    }
-	    var middle = Math.floor((start + end) / 2);
-	    if (element === array[middle]) {
-	        console.log("return middle " + middle);
-	        return middle;
+	    var middleIndex = Math.floor((startIndex + endIndex) / 2);
+	    console.log("middleIndex = " + middleIndex);
+	    if (element === array[middleIndex]) {
+	        console.log("return middle " + middleIndex);
+	        return middleIndex;
 	    }
 	    else {
-	        if (element < array[middle]) {
-	            console.log("element " + element + " < array[middle] " + array[middle]);
-	            return binarySearch(array, element, start, middle - 1);
+	        if (element < array[middleIndex]) {
+	            console.log("element " + element + " < array[middle] " + array[middleIndex]);
+	            return binarySearch(array, element, startIndex, middleIndex - 1);
 	        }
 	        else {
-	            console.log("element " + element + " >= array[middle] " + array[middle]);
-	            return binarySearch(array, element, middle + 1, end);
+	            console.log("element " + element + " >= array[middle] " + array[middleIndex]);
+	            return binarySearch(array, element, middleIndex + 1, endIndex);
 	        }
 	    }
 	}
