@@ -1,5 +1,7 @@
 //Design an algorithm to print all permutations of a string. For simplicity, assume all characters are unique.
 
+let mergeCounter = 0;
+
 export function permuteString(source: string) {
     if(!source) {
         throw "provide a valid non-empty string please";
@@ -15,7 +17,13 @@ export function permuteString(source: string) {
 }
 
 export function merge(character: string, source: string): string[] {
-    console.log("start merge", character, source);
+    mergeCounter++;
+
+    if (mergeCounter == 5) {
+        throw "stop: mergeCounter";
+    }
+
+    console.log("start merge", mergeCounter, character, source);
     let sourceArray: string[] = source.split('');
 
     let combinations: string[];
@@ -32,15 +40,21 @@ export function merge(character: string, source: string): string[] {
     
     let result: string[] = [];
 
-    for(let combination of combinations) {
-        console.log("start working with combination", combination);
-        let combinationArray = combination.split('');
+    console.log("combinations", character, combinations);
 
-        for(let i = 0; i < combinationArray.length; i++) {
-            combinationArray.splice(i, 0, character!);
-            let r = combinationArray.join('');
-            console.log("push", r);
-            result.push(r);
+    if (character == "r") {
+        for(let combination of combinations) {
+            console.log("start working with combination", combination);
+            let combinationArray = combination.split('');
+            console.log("combinationArray", combinationArray);
+
+            for(let combinationArrayIndex = 0; combinationArrayIndex < combinationArray.length; combinationArrayIndex++) {
+                let copy = combinationArray.join().split('');
+                copy.splice(combinationArrayIndex, 0, character!);
+                let copyText = copy.join('');
+                console.log("push", copyText);
+                result.push(copyText);
+            }
         }
     }
 
