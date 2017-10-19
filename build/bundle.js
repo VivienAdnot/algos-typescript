@@ -45,9 +45,11 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	exports.__esModule = true;
-	var permuteString_1 = __webpack_require__(1);
-	permuteString_1.permuteString("bruno");
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var hasAllUniqueCharacters_1 = __webpack_require__(1);
+	console.log("is bruno unique ?", hasAllUniqueCharacters_1.hasAllUniqueCharacters("bruno"));
+	console.log("is vivien unique ?", hasAllUniqueCharacters_1.hasAllUniqueCharacters("vivien"));
+	hasAllUniqueCharacters_1.getASCII("0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVXYZ[\]^_`abcdefgijklmnopqrstuvxwz{|}~");
 
 
 /***/ }),
@@ -55,52 +57,26 @@
 /***/ (function(module, exports) {
 
 	"use strict";
-	//Design an algorithm to print all permutations of a string. For simplicity, assume all characters are unique.
-	exports.__esModule = true;
-	function permuteString(source) {
-	    if (!source) {
-	        throw "provide a valid non-empty string please";
-	    }
-	    if (source.length == 1) {
-	        console.log(source);
-	    }
-	    var subArray = source.split('');
-	    var newCharacter = subArray.pop();
-	    console.log("end merge", merge(newCharacter, subArray.join('')));
-	}
-	exports.permuteString = permuteString;
-	function merge(character, source) {
-	    var sourceArray = source.split('');
-	    var combinations;
-	    if (sourceArray.length > 1) {
-	        var newCharacter = sourceArray.pop();
-	        var subsetArray = sourceArray.join('');
-	        combinations = merge(newCharacter, subsetArray);
-	    }
-	    else {
-	        console.log("stop digging", sourceArray);
-	        combinations = sourceArray;
-	    }
-	    var result = [];
-	    console.log("combinations", character, combinations);
-	    for (var _i = 0, combinations_1 = combinations; _i < combinations_1.length; _i++) {
-	        var combination = combinations_1[_i];
-	        var combinationArray = combination.split('');
-	        for (var combinationArrayIndex = 0; combinationArrayIndex < combinationArray.length; combinationArrayIndex++) {
-	            var newArray = insertArray(combinationArray, combinationArrayIndex, character);
-	            var copyText = newArray.join('');
-	            result.push(copyText);
+	Object.defineProperty(exports, "__esModule", { value: true });
+	function hasAllUniqueCharacters(tested) {
+	    var testedArray = tested.split('');
+	    var uniqueCharacters = [];
+	    for (var _i = 0, testedArray_1 = testedArray; _i < testedArray_1.length; _i++) {
+	        var character = testedArray_1[_i];
+	        if (uniqueCharacters.indexOf(character) !== -1) {
+	            return false;
 	        }
-	        result.push(combination + character);
+	        uniqueCharacters.push(character);
 	    }
-	    return result;
+	    return true;
 	}
-	exports.merge = merge;
-	function insertArray(arr, position, source) {
-	    var copy = arr.map(function (c) { return c; });
-	    copy.splice(position, 0, source);
-	    return copy;
+	exports.hasAllUniqueCharacters = hasAllUniqueCharacters;
+	function getASCII(source) {
+	    for (var index = 0; index < source.length; index++) {
+	        console.log(source[index], source.charCodeAt(index));
+	    }
 	}
+	exports.getASCII = getASCII;
 
 
 /***/ })

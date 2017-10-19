@@ -9,7 +9,6 @@
   "author": "Vivien Adnot",
   "license": "ISC",
   "devDependencies": {
-    "es6-promise": "^4.1.0",
     "gulp": "^3.9.1",
     "gulp-connect": "^5.0.0",
     "merge": "^1.2.0",
