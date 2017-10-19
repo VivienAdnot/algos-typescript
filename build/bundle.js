@@ -57,7 +57,6 @@
 	"use strict";
 	//Design an algorithm to print all permutations of a string. For simplicity, assume all characters are unique.
 	exports.__esModule = true;
-	var mergeCounter = 0;
 	function permuteString(source) {
 	    if (!source) {
 	        throw "provide a valid non-empty string please";
@@ -71,11 +70,6 @@
 	}
 	exports.permuteString = permuteString;
 	function merge(character, source) {
-	    mergeCounter++;
-	    if (mergeCounter == 5) {
-	        throw "stop: mergeCounter";
-	    }
-	    console.log("start merge", mergeCounter, character, source);
 	    var sourceArray = source.split('');
 	    var combinations;
 	    if (sourceArray.length > 1) {
@@ -89,24 +83,24 @@
 	    }
 	    var result = [];
 	    console.log("combinations", character, combinations);
-	    if (character == "r") {
-	        for (var _i = 0, combinations_1 = combinations; _i < combinations_1.length; _i++) {
-	            var combination = combinations_1[_i];
-	            console.log("start working with combination", combination);
-	            var combinationArray = combination.split('');
-	            console.log("combinationArray", combinationArray);
-	            for (var combinationArrayIndex = 0; combinationArrayIndex < combinationArray.length; combinationArrayIndex++) {
-	                var copy = combinationArray.join().split('');
-	                copy.splice(combinationArrayIndex, 0, character);
-	                var copyText = copy.join('');
-	                console.log("push", copyText);
-	                result.push(copyText);
-	            }
+	    for (var _i = 0, combinations_1 = combinations; _i < combinations_1.length; _i++) {
+	        var combination = combinations_1[_i];
+	        var combinationArray = combination.split('');
+	        for (var combinationArrayIndex = 0; combinationArrayIndex < combinationArray.length; combinationArrayIndex++) {
+	            var newArray = insertArray(combinationArray, combinationArrayIndex, character);
+	            var copyText = newArray.join('');
+	            result.push(copyText);
 	        }
+	        result.push(combination + character);
 	    }
 	    return result;
 	}
 	exports.merge = merge;
+	function insertArray(arr, position, source) {
+	    var copy = arr.map(function (c) { return c; });
+	    copy.splice(position, 0, source);
+	    return copy;
+	}
 
 
 /***/ })
