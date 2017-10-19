@@ -42,41 +42,18 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	Object.defineProperty(exports, "__esModule", { value: true });
-	var hasAllUniqueCharacters_1 = __webpack_require__(1);
-	console.log("is bruno unique ?", hasAllUniqueCharacters_1.hasAllUniqueCharacters("bruno"));
-	console.log("is vivien unique ?", hasAllUniqueCharacters_1.hasAllUniqueCharacters("vivien"));
-	hasAllUniqueCharacters_1.getASCII("0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVXYZ[\]^_`abcdefgijklmnopqrstuvxwz{|}~");
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports) {
 
-	"use strict";
-	Object.defineProperty(exports, "__esModule", { value: true });
-	function hasAllUniqueCharacters(tested) {
-	    var testedArray = tested.split('');
-	    var uniqueCharacters = [];
-	    for (var _i = 0, testedArray_1 = testedArray; _i < testedArray_1.length; _i++) {
-	        var character = testedArray_1[_i];
-	        if (uniqueCharacters.indexOf(character) !== -1) {
-	            return false;
-	        }
-	        uniqueCharacters.push(character);
-	    }
-	    return true;
+	import { hasAllUniqueCharacters } from "./algorithms/arraysAndStrings/hasAllUniqueCharacters";
+	console.log("is bruno unique ?", hasAllUniqueCharacters("bruno"));
+	console.log("is vivien unique ?", hasAllUniqueCharacters("vivien"));
+	//getASCII("0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVXYZ[\]^_`abcdefgijklmnopqrstuvxwz{|}~");
+	let myMap = new Map();
+	myMap.set("ok", "ok");
+	myMap.set("usher", "yeah");
+	for (let key of myMap.keys()) {
+	    console.log(myMap.get(key));
 	}
-	exports.hasAllUniqueCharacters = hasAllUniqueCharacters;
-	function getASCII(source) {
-	    for (var index = 0; index < source.length; index++) {
-	        console.log(source[index], source.charCodeAt(index));
-	    }
-	}
-	exports.getASCII = getASCII;
 
 
 /***/ })
