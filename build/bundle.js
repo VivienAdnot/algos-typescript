@@ -47,9 +47,27 @@
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
 	var hasAllUniqueCharacters_1 = __webpack_require__(1);
-	console.log("is bruno unique ?", hasAllUniqueCharacters_1.hasAllUniqueCharacters("bruno"));
-	console.log("is vivien unique ?", hasAllUniqueCharacters_1.hasAllUniqueCharacters("vivien"));
-	hasAllUniqueCharacters_1.getASCII("0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVXYZ[\]^_`abcdefgijklmnopqrstuvxwz{|}~");
+	//console.log("is bruno unique ?", hasAllUniqueCharacters("bruno"));
+	//console.log("is vivien unique ?", hasAllUniqueCharacters("vivien"));
+	//getASCII("0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVXYZ[\]^_`abcdefgijklmnopqrstuvxwz{|}~");
+	var letters = " !#$%&'()*+-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVXYZ[\]^_`abcdefgijklmnopqrstuvxwz{|}~";
+	function getRandomLetter() {
+	    var randomIndex = Math.round(Math.random() * 89);
+	    //console.log("getRandomLetter", randomIndex, letters[randomIndex]);
+	    return letters[randomIndex];
+	}
+	///const MAX_STRING_LENGTH = 134217728;
+	var wordBuilder = [];
+	for (var i = 0; i < 12; i++) {
+	    var randomLetter = getRandomLetter();
+	    wordBuilder.push(randomLetter);
+	    //console.log("push", randomLetter, wordBuilder.length);
+	}
+	var word = wordBuilder.join('');
+	console.log("word", word, word.length);
+	console.time();
+	console.log("is word unique ?", hasAllUniqueCharacters_1.hasAllUniqueCharacters(word));
+	console.timeEnd();
 
 
 /***/ }),
@@ -58,25 +76,33 @@
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	function hasAllUniqueCharacters(tested) {
+	function hasAllUniqueCharactersDummy(tested) {
 	    var testedArray = tested.split('');
 	    var uniqueCharacters = [];
 	    for (var _i = 0, testedArray_1 = testedArray; _i < testedArray_1.length; _i++) {
 	        var character = testedArray_1[_i];
 	        if (uniqueCharacters.indexOf(character) !== -1) {
+	            console.log("hasAllUniqueCharacters: doublon is", character, "found at", uniqueCharacters.indexOf(character));
 	            return false;
 	        }
 	        uniqueCharacters.push(character);
 	    }
 	    return true;
 	}
-	exports.hasAllUniqueCharacters = hasAllUniqueCharacters;
-	function getASCII(source) {
-	    for (var index = 0; index < source.length; index++) {
-	        console.log(source[index], source.charCodeAt(index));
+	exports.hasAllUniqueCharactersDummy = hasAllUniqueCharactersDummy;
+	function hasAllUniqueCharacters(tested) {
+	    var testedArray = tested.split('');
+	    var asciiTable = [];
+	    for (var index = 0; index < testedArray.length; index++) {
+	        var asciiIndex = tested.charCodeAt(index);
+	        if (asciiTable[asciiIndex]) {
+	            return false;
+	        }
+	        asciiTable[asciiIndex] = true;
 	    }
+	    return true;
 	}
-	exports.getASCII = getASCII;
+	exports.hasAllUniqueCharacters = hasAllUniqueCharacters;
 
 
 /***/ })
