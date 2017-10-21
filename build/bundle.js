@@ -46,28 +46,8 @@
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	var hasAllUniqueCharacters_1 = __webpack_require__(1);
-	//console.log("is bruno unique ?", hasAllUniqueCharacters("bruno"));
-	//console.log("is vivien unique ?", hasAllUniqueCharacters("vivien"));
-	//getASCII("0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVXYZ[\]^_`abcdefgijklmnopqrstuvxwz{|}~");
-	var letters = " !#$%&'()*+-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVXYZ[\]^_`abcdefgijklmnopqrstuvxwz{|}~";
-	function getRandomLetter() {
-	    var randomIndex = Math.round(Math.random() * 89);
-	    //console.log("getRandomLetter", randomIndex, letters[randomIndex]);
-	    return letters[randomIndex];
-	}
-	///const MAX_STRING_LENGTH = 134217728;
-	var wordBuilder = [];
-	for (var i = 0; i < 12; i++) {
-	    var randomLetter = getRandomLetter();
-	    wordBuilder.push(randomLetter);
-	    //console.log("push", randomLetter, wordBuilder.length);
-	}
-	var word = wordBuilder.join('');
-	console.log("word", word, word.length);
-	console.time();
-	console.log("is word unique ?", hasAllUniqueCharacters_1.hasAllUniqueCharacters(word));
-	console.timeEnd();
+	var removeDuplicates_1 = __webpack_require__(1);
+	removeDuplicates_1.test_removeDuplicates();
 
 
 /***/ }),
@@ -76,33 +56,32 @@
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	function hasAllUniqueCharactersDummy(tested) {
+	function removeDuplicates(tested) {
 	    var testedArray = tested.split('');
-	    var uniqueCharacters = [];
-	    for (var _i = 0, testedArray_1 = testedArray; _i < testedArray_1.length; _i++) {
-	        var character = testedArray_1[_i];
-	        if (uniqueCharacters.indexOf(character) !== -1) {
-	            console.log("hasAllUniqueCharacters: doublon is", character, "found at", uniqueCharacters.indexOf(character));
-	            return false;
+	    var tail = 1;
+	    for (var i = 1; i < testedArray.length; ++i) {
+	        var j = void 0;
+	        for (j = 0; j < tail; ++j) {
+	            if (testedArray[j] == testedArray[i]) {
+	                break;
+	            }
 	        }
-	        uniqueCharacters.push(character);
-	    }
-	    return true;
-	}
-	exports.hasAllUniqueCharactersDummy = hasAllUniqueCharactersDummy;
-	function hasAllUniqueCharacters(tested) {
-	    var testedArray = tested.split('');
-	    var asciiTable = [];
-	    for (var index = 0; index < testedArray.length; index++) {
-	        var asciiIndex = tested.charCodeAt(index);
-	        if (asciiTable[asciiIndex]) {
-	            return false;
+	        if (j == tail) {
+	            testedArray[tail] = testedArray[i];
+	            ++tail;
 	        }
-	        asciiTable[asciiIndex] = true;
 	    }
-	    return true;
+	    return testedArray.slice(0, tail).join('');
 	}
-	exports.hasAllUniqueCharacters = hasAllUniqueCharacters;
+	exports.removeDuplicates = removeDuplicates;
+	function test_removeDuplicates() {
+	    console.log("aa", removeDuplicates("aa"));
+	    console.log("viv", removeDuplicates("viv"));
+	    console.log("vivien", removeDuplicates("vivien"));
+	    console.log("vivieei", removeDuplicates("vivieei"));
+	    console.log("aaabbb", removeDuplicates("aaabbb"));
+	}
+	exports.test_removeDuplicates = test_removeDuplicates;
 
 
 /***/ })
