@@ -46,8 +46,8 @@
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	var removeDuplicates_1 = __webpack_require__(1);
-	removeDuplicates_1.test_removeDuplicates();
+	var areAnagrams_1 = __webpack_require__(1);
+	areAnagrams_1.test_areAnagrams();
 
 
 /***/ }),
@@ -56,32 +56,52 @@
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	function removeDuplicates(tested) {
-	    var testedArray = tested.split('');
-	    var tail = 1;
-	    for (var i = 1; i < testedArray.length; ++i) {
-	        var j = void 0;
-	        for (j = 0; j < tail; ++j) {
-	            if (testedArray[j] == testedArray[i]) {
-	                break;
+	function areAnagrams(str1, str2) {
+	    if (str1.length != str2.length)
+	        return false;
+	    var uniqueCharacters = 0;
+	    var letters = []; //ascii table, 256 max length
+	    for (var i = 0; i < str1.length; i++) {
+	        var charCode = str1.charCodeAt(i);
+	        if (!letters[charCode]) {
+	            uniqueCharacters++;
+	            letters[charCode] = 0;
+	        }
+	        letters[charCode]++;
+	    }
+	    var charactersCompleted = 0;
+	    for (var i = 0; i < str2.length; i++) {
+	        var charCode = str1.charCodeAt(i);
+	        // found more of this character in str2 than in str1
+	        if (!letters[charCode] || letters[charCode] == 0) {
+	            return false;
+	        }
+	        letters[charCode]--;
+	        if (letters[charCode] == 0) {
+	            charactersCompleted++;
+	            if (charactersCompleted == uniqueCharacters) {
+	                return i == (str2.length - 1);
 	            }
 	        }
-	        if (j == tail) {
-	            testedArray[tail] = testedArray[i];
-	            ++tail;
-	        }
 	    }
-	    return testedArray.slice(0, tail).join('');
+	    return false;
 	}
-	exports.removeDuplicates = removeDuplicates;
-	function test_removeDuplicates() {
-	    console.log("aa", removeDuplicates("aa"));
-	    console.log("viv", removeDuplicates("viv"));
-	    console.log("vivien", removeDuplicates("vivien"));
-	    console.log("vivieei", removeDuplicates("vivieei"));
-	    console.log("aaabbb", removeDuplicates("aaabbb"));
+	exports.areAnagrams = areAnagrams;
+	function test_areAnagrams() {
+	    var tests = [
+	        { a: "vivien", b: "bruno" },
+	        { a: "vivien", b: "vienvi" },
+	        { a: "vivien", b: "nevivi" },
+	        { a: "bruno", b: "bourn" },
+	        { a: "zanzibar", b: "zibarzan" },
+	        { a: "bob", b: "obbo" }
+	    ];
+	    for (var _i = 0, tests_1 = tests; _i < tests_1.length; _i++) {
+	        var test = tests_1[_i];
+	        console.log(test.a, test.b, areAnagrams(test.a, test.b));
+	    }
 	}
-	exports.test_removeDuplicates = test_removeDuplicates;
+	exports.test_areAnagrams = test_areAnagrams;
 
 
 /***/ })

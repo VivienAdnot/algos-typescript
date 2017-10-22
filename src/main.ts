@@ -1,3 +1,3 @@
-import { test_removeDuplicates } from "./algorithms/string/removeDuplicates";
+import { test_areAnagrams } from "./algorithms/string/areAnagrams";
 
-test_removeDuplicates();
+test_areAnagrams();
