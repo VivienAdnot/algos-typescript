@@ -46,62 +46,162 @@
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	var areAnagrams_1 = __webpack_require__(1);
-	areAnagrams_1.test_areAnagrams();
+	const test_1 = __webpack_require__(1);
+	test_1.test_mazeSearch();
 
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	Object.defineProperty(exports, "__esModule", { value: true });
+	const maze_1 = __webpack_require__(2);
+	const search_1 = __webpack_require__(3);
+	function test_mazeSearch() {
+	    let maze = new maze_1.Maze([
+	        ['v', '?', '|', ' ', '<'],
+	        ['?', ' ', ' ', '?', ' '],
+	        ['?', ' ', '?', ' ', '|'],
+	        ['?', ' ', ' ', '-', ' '],
+	        ['>', ' ', '^', '?', '<']
+	    ]);
+	    let searcher = new search_1.MazeSearch(maze);
+	    console.log(searcher.countExits());
+	}
+	exports.test_mazeSearch = test_mazeSearch;
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	function areAnagrams(str1, str2) {
-	    if (str1.length != str2.length)
-	        return false;
-	    var uniqueCharacters = 0;
-	    var letters = []; //ascii table, 256 max length
-	    for (var i = 0; i < str1.length; i++) {
-	        var charCode = str1.charCodeAt(i);
-	        if (!letters[charCode]) {
-	            uniqueCharacters++;
-	            letters[charCode] = 0;
-	        }
-	        letters[charCode]++;
+	class Maze {
+	    constructor(layout) {
+	        this.layout = layout;
 	    }
-	    var charactersCompleted = 0;
-	    for (var i = 0; i < str2.length; i++) {
-	        var charCode = str1.charCodeAt(i);
-	        // found more of this character in str2 than in str1
-	        if (!letters[charCode] || letters[charCode] == 0) {
-	            return false;
-	        }
-	        letters[charCode]--;
-	        if (letters[charCode] == 0) {
-	            charactersCompleted++;
-	            if (charactersCompleted == uniqueCharacters) {
-	                return i == (str2.length - 1);
+	    getToken(position) {
+	        return this.layout[position.row][position.column];
+	    }
+	    getLimits() {
+	        return {
+	            rows: this.layout.length,
+	            columns: this.layout[0].length
+	        };
+	    }
+	}
+	exports.Maze = Maze;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	Object.defineProperty(exports, "__esModule", { value: true });
+	const structures_1 = __webpack_require__(4);
+	class MazeSearch {
+	    constructor(maze) {
+	        this.maze = maze;
+	        this.exitPositions = [];
+	    }
+	    countExits() {
+	        let currentPosition = { row: 0, column: 0 };
+	        let currentToken = this.maze.getToken(currentPosition);
+	        let nextDirections = structures_1.charDirections.get(currentToken);
+	        this.next(currentPosition, nextDirections[0], []);
+	        return this.exitPositions;
+	    }
+	    next(currentPosition, directionSource, path) {
+	        path.push(currentPosition);
+	        let currentToken = this.maze.getToken(currentPosition);
+	        let nextDirections = structures_1.charDirections.get(currentToken);
+	        for (let direction of nextDirections) {
+	            if (direction == "CONTINUE") {
+	                direction = directionSource;
 	            }
+	            else if (direction == structures_1.reverseDirection.get(directionSource)) {
+	                continue;
+	            }
+	            let nextPosition = this.move(currentPosition, direction);
+	            if (this.isCollision(nextPosition, path)) {
+	                continue;
+	            }
+	            if (this.isExit(nextPosition)) {
+	                this.addExit(currentPosition, currentToken);
+	                continue;
+	            }
+	            this.next(Object.assign({}, nextPosition), direction, path.slice());
 	        }
 	    }
-	    return false;
-	}
-	exports.areAnagrams = areAnagrams;
-	function test_areAnagrams() {
-	    var tests = [
-	        { a: "vivien", b: "bruno" },
-	        { a: "vivien", b: "vienvi" },
-	        { a: "vivien", b: "nevivi" },
-	        { a: "bruno", b: "bourn" },
-	        { a: "zanzibar", b: "zibarzan" },
-	        { a: "bob", b: "obbo" }
-	    ];
-	    for (var _i = 0, tests_1 = tests; _i < tests_1.length; _i++) {
-	        var test = tests_1[_i];
-	        console.log(test.a, test.b, areAnagrams(test.a, test.b));
+	    move(currentPosition, direction) {
+	        switch (direction) {
+	            case "UP":
+	                return {
+	                    row: currentPosition.row - 1,
+	                    column: currentPosition.column
+	                };
+	            case "DOWN":
+	                return {
+	                    row: currentPosition.row + 1,
+	                    column: currentPosition.column
+	                };
+	            case "LEFT":
+	                return {
+	                    row: currentPosition.row,
+	                    column: currentPosition.column - 1
+	                };
+	            case "RIGHT":
+	                return {
+	                    row: currentPosition.row,
+	                    column: currentPosition.column + 1
+	                };
+	        }
+	        return currentPosition;
+	    }
+	    isExit(position) {
+	        let limits = this.maze.getLimits();
+	        if (position.column < 0 || position.column >= limits.columns)
+	            return true;
+	        if (position.row < 0 || position.row >= limits.rows)
+	            return true;
+	        return false;
+	    }
+	    isCollision(position, path) {
+	        return path.some(p => p.row == position.row && p.column == position.column);
+	    }
+	    addExit(position, currentToken) {
+	        let key = position.row + "-" + position.column;
+	        if (this.exitPositions.indexOf(key) == -1) {
+	            this.exitPositions.push(key);
+	        }
 	    }
 	}
-	exports.test_areAnagrams = test_areAnagrams;
+	exports.MazeSearch = MazeSearch;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.charDirections = new Map();
+	exports.charDirections.set('^', ["UP"]);
+	exports.charDirections.set('>', ["RIGHT"]);
+	exports.charDirections.set('<', ["LEFT"]);
+	exports.charDirections.set('v', ["DOWN"]);
+	exports.charDirections.set('|', ["UP", "DOWN"]);
+	exports.charDirections.set('-', ["LEFT", "RIGHT"]);
+	exports.charDirections.set('?', ["UP", "RIGHT", "DOWN", "LEFT"]);
+	exports.charDirections.set(' ', ["CONTINUE"]);
+	exports.reverseDirection = new Map();
+	exports.reverseDirection.set("UP", "DOWN");
+	exports.reverseDirection.set("DOWN", "UP");
+	exports.reverseDirection.set("RIGHT", "LEFT");
+	exports.reverseDirection.set("LEFT", "RIGHT");
 
 
 /***/ })

@@ -1,3 +1,3 @@
-import { test_areAnagrams } from "./algorithms/string/areAnagrams";
+import { test_mazeSearch } from "./algorithms/search/maze/test";
 
-test_areAnagrams();
+test_mazeSearch();
