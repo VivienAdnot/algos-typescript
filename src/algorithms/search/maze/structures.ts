@@ -5,10 +5,6 @@ export interface Position {
     column: number;
 }
 
-export interface Border {
-    outDirection: Direction;
-}
-
 export let charDirections = new Map<string, Direction[]>();
 charDirections.set('^', ["UP"]);
 charDirections.set('>', ["RIGHT"]);
