@@ -1,5 +1,5 @@
 import { Maze } from './maze';
-import { Position, Direction, charDirections, reverseDirection } from './structures';
+import { Position, Direction, charDirections } from './structures';
 
 export class MazeSearch {
     private exitPositions: string[] = [];
@@ -26,8 +26,6 @@ export class MazeSearch {
         for (let direction of nextDirections!) {
             if (direction == "CONTINUE") {
                 direction = directionSource;
-            } else if (direction == reverseDirection.get(directionSource)) {
-                continue;
             }
 
             let nextPosition = this.move(currentPosition, direction);

@@ -14,9 +14,3 @@ charDirections.set('|', ["UP", "DOWN"]);
 charDirections.set('-', ["LEFT", "RIGHT"]);
 charDirections.set('?', ["UP", "RIGHT", "DOWN", "LEFT"]);
 charDirections.set(' ', ["CONTINUE"]);
-
-export let reverseDirection = new Map<Direction, Direction>();
-reverseDirection.set("UP", "DOWN");
-reverseDirection.set("DOWN", "UP");
-reverseDirection.set("RIGHT", "LEFT");
-reverseDirection.set("LEFT", "RIGHT");
