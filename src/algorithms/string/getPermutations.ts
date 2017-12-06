@@ -1,6 +1,6 @@
 //Design an algorithm to print all permutations of a string. For simplicity, assume all characters are unique.
 
-export function permuteString(source: string) {
+export function getPermutations(source: string) {
     if(!source) {
         throw "provide a valid non-empty string please";
     }
@@ -14,7 +14,7 @@ export function permuteString(source: string) {
     console.log("end merge", merge(newCharacter!, subArray.join('')));
 }
 
-export function merge(character: string, source: string): string[] {
+function merge(character: string, source: string): string[] {
     let sourceArray: string[] = source.split('');
 
     let combinations: string[];

@@ -3,14 +3,13 @@
         "sourceMap":  true,
         "alwaysStrict": true,
         "forceConsistentCasingInFileNames": true,
-        //"noEmitOnError": true,
+        "noEmitOnError": true,
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "noUnusedParameters": false,
         "strictNullChecks": true,
-        "target": "es5",
-        "lib": ["es2015", "dom"]
+        "target": "ES2017"
     },
     "compileOnSave": false
 }
