@@ -4,9 +4,7 @@ import { Position, Direction, charDirections } from './structures';
 export class MazeSearch {
     private exitPositions: string[] = [];
 
-    constructor(private maze: Maze) {
-
-    }
+    constructor(private maze: Maze) { }
 
     countExits(): string[] {
         let currentPosition = {row: 0, column: 0};
@@ -67,7 +65,7 @@ export class MazeSearch {
                 }
         }
 
-        return currentPosition;
+        return currentPosition; //never
     }
 
     private isExit(position: Position) {
