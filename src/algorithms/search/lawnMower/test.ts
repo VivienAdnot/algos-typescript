@@ -1,29 +1,31 @@
-import { LawmMowerDriver } from './drive';
+import { LawmMower } from './drive';
 
 export function test_lawnMowerDriver() {
-    console.log("test_lawnMowerDriver start");
-
-    // let driver = new LawmMowerDriver({
-    //     rows: 5,
-    //     columns: 5,
-    //     initialPosition: {
-    //         row: 1,
-    //         column: 2,
-    //         direction: 'N'
-    //     },
-    //     path: ['G', 'A', 'G', 'A', 'G', 'A', 'G', 'A', 'A']
-    // });
-
-    let driver = new LawmMowerDriver({
-        maxX: 5,
-        maxY: 5,
-        initialPosition: {
-            row: 3,
-            column: 3,
-            direction: 'E'
-        },
-        path: ['A', 'A', 'D', 'A', 'A', 'D', 'A', 'D', 'D', 'A']
+    let lawmMowerA = new LawmMower({
+        width: 5,
+        height: 5
     });
 
-    console.log(driver.start());
+    console.log(lawmMowerA.drive({
+        initialPosition: {
+            x: 1,
+            y: 2,
+            direction: 'N'
+        },
+        moves: ['G', 'A', 'G', 'A', 'G', 'A', 'G', 'A', 'A']
+    }));
+
+    let lawmMowerB = new LawmMower({
+        width: 5,
+        height: 5
+    });
+    
+    console.log(lawmMowerB.drive({
+        initialPosition: {
+            x: 3,
+            y: 3,
+            direction: 'E'
+        },
+        moves: ['A', 'A', 'D', 'A', 'A', 'D', 'A', 'D', 'D', 'A']
+    }));
 };

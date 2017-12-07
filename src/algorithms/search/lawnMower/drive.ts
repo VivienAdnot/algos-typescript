@@ -1,51 +1,40 @@
-import { Position, Movement, rotateClockWise, rotateAntiClockWise } from './structures';
+import { IPosition, Move, IPath, Lawn, rotateClockWise, rotateAntiClockWise } from './structures';
 
-export interface LawmMowerContext {
-    maxX: number;
-    maxY: number;
-    initialPosition: Position;
-    path: Movement[];
-}
+export class LawmMower {
+    lawn: Lawn;
 
-export class LawmMowerDriver {
-    private currentPosition: Position;
-    constructor(private context: LawmMowerContext) {
-
+    constructor(surface: Lawn) {
+        this.lawn = surface;
     }
 
-    start() {
-        this.currentPosition = this.context.initialPosition;
-        this.next();
-        return this.currentPosition;
-    }
+    drive(path: IPath): IPosition {
+        let currentPosition = path.initialPosition;
+        
+        for (let move of path.moves) {
+            let nextPosition = this.rotateOrMoveForward(currentPosition, move);
 
-    next() {
-        for (let i = 0; i < this.context.path.length; i++) {
-            console.log("start for", i, this.currentPosition);
-            let nextPosition = this.moveForwardOrRotate(this.currentPosition, this.context.path[i]);
-            console.log("nextPosition", nextPosition);
-
-            if (this.isExit(nextPosition)) {
-                console.log("nextPosition is exit");
+            if (this.isOut(nextPosition)) {
                 continue;
             } else {
-                this.currentPosition = nextPosition;
+                currentPosition = nextPosition;
             }
         }
+
+        return currentPosition;
     }
 
-    moveForwardOrRotate(currentPosition: Position, movement: Movement): Position {
+    private rotateOrMoveForward(currentPosition: IPosition, movement: Move): IPosition {
         switch(movement) {
             case "G":
                 return {
-                    row: currentPosition.row,
-                    column: currentPosition.column,
+                    x: currentPosition.x,
+                    y: currentPosition.y,
                     direction: rotateAntiClockWise.get(currentPosition.direction)!
                 }
             case "D":
                 return {
-                    row: currentPosition.row,
-                    column: currentPosition.column,
+                    x: currentPosition.x,
+                    y: currentPosition.y,
                     direction: rotateClockWise.get(currentPosition.direction)!
                 }
             case "A":
@@ -53,38 +42,41 @@ export class LawmMowerDriver {
         }
     }
 
-    moveForward(currentPosition: Position): Position {
+    private moveForward(currentPosition: IPosition): IPosition {
         switch(currentPosition.direction) {
             case "N":
                 return {
-                    row: currentPosition.row,
-                    column: currentPosition.column + 1,
+                    x: currentPosition.x,
+                    y: currentPosition.y + 1,
                     direction: currentPosition.direction
                 }
             case "E":
                 return {
-                    row: currentPosition.row + 1,
-                    column: currentPosition.column,
+                    x: currentPosition.x + 1,
+                    y: currentPosition.y,
                     direction: currentPosition.direction
                 }
             case "S":
                 return {
-                    row: currentPosition.row,
-                    column: currentPosition.column -1,
+                    x: currentPosition.x,
+                    y: currentPosition.y -1,
                     direction: currentPosition.direction
                 }
             case "W":
                 return {
-                    row: currentPosition.row - 1,
-                    column: currentPosition.column,
+                    x: currentPosition.x - 1,
+                    y: currentPosition.y,
                     direction: currentPosition.direction
                 }
         }
     }
 
-    isExit(position: Position) {
-        if (position.column < 0 || position.column > this.context.maxY) return true;
-        if (position.row < 0 || position.row > this.context.maxX) return true;
+    private isOut(position: IPosition): boolean {
+        if (position.y < 0 || position.y > this.lawn.height
+            || position.x < 0 || position.x > this.lawn.width) {
+            return true;
+        }
+
         return false;
     }
 }

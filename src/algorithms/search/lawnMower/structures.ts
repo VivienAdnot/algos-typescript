@@ -1,11 +1,21 @@
 export type Direction = "N" | "E" | "S" | "W";
-export type Movement = "G" | "D" | "A";
+export type Move = "G" | "D" | "A";
 
-export interface Position {
-    row: number;
-    column: number;
+export interface IPosition {
+    x: number;
+    y: number;
     direction: Direction;
 }
+
+export interface Lawn {
+    width: number;
+    height: number;
+}
+
+export interface IPath {
+    initialPosition: IPosition,
+    moves: Move[]
+};
 
 export let rotateClockWise = new Map<Direction, Direction>();
 rotateClockWise.set("N", "E");

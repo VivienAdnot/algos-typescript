@@ -58,28 +58,30 @@
 	Object.defineProperty(exports, "__esModule", { value: true });
 	const drive_1 = __webpack_require__(2);
 	function test_lawnMowerDriver() {
-	    console.log("test_lawnMowerDriver start");
-	    // let driver = new LawmMowerDriver({
-	    //     rows: 5,
-	    //     columns: 5,
-	    //     initialPosition: {
-	    //         row: 1,
-	    //         column: 2,
-	    //         direction: 'N'
-	    //     },
-	    //     path: ['G', 'A', 'G', 'A', 'G', 'A', 'G', 'A', 'A']
-	    // });
-	    let driver = new drive_1.LawmMowerDriver({
-	        maxX: 5,
-	        maxY: 5,
+	    let lawmMowerA = new drive_1.LawmMower({
+	        width: 5,
+	        height: 5
+	    });
+	    console.log(lawmMowerA.drive({
 	        initialPosition: {
-	            row: 3,
-	            column: 3,
+	            x: 1,
+	            y: 2,
+	            direction: 'N'
+	        },
+	        moves: ['G', 'A', 'G', 'A', 'G', 'A', 'G', 'A', 'A']
+	    }));
+	    let lawmMowerB = new drive_1.LawmMower({
+	        width: 5,
+	        height: 5
+	    });
+	    console.log(lawmMowerB.drive({
+	        initialPosition: {
+	            x: 3,
+	            y: 3,
 	            direction: 'E'
 	        },
-	        path: ['A', 'A', 'D', 'A', 'A', 'D', 'A', 'D', 'D', 'A']
-	    });
-	    console.log(driver.start());
+	        moves: ['A', 'A', 'D', 'A', 'A', 'D', 'A', 'D', 'D', 'A']
+	    }));
 	}
 	exports.test_lawnMowerDriver = test_lawnMowerDriver;
 	;
@@ -92,41 +94,35 @@
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
 	const structures_1 = __webpack_require__(3);
-	class LawmMowerDriver {
-	    constructor(context) {
-	        this.context = context;
+	class LawmMower {
+	    constructor(surface) {
+	        this.lawn = surface;
 	    }
-	    start() {
-	        this.currentPosition = this.context.initialPosition;
-	        this.next();
-	        return this.currentPosition;
-	    }
-	    next() {
-	        for (let i = 0; i < this.context.path.length; i++) {
-	            console.log("start for", i, this.currentPosition);
-	            let nextPosition = this.moveForwardOrRotate(this.currentPosition, this.context.path[i]);
-	            console.log("nextPosition", nextPosition);
-	            if (this.isExit(nextPosition)) {
-	                console.log("nextPosition is exit");
+	    drive(path) {
+	        let currentPosition = path.initialPosition;
+	        for (let move of path.moves) {
+	            let nextPosition = this.rotateOrMoveForward(currentPosition, move);
+	            if (this.isOut(nextPosition)) {
 	                continue;
 	            }
 	            else {
-	                this.currentPosition = nextPosition;
+	                currentPosition = nextPosition;
 	            }
 	        }
+	        return currentPosition;
 	    }
-	    moveForwardOrRotate(currentPosition, movement) {
+	    rotateOrMoveForward(currentPosition, movement) {
 	        switch (movement) {
 	            case "G":
 	                return {
-	                    row: currentPosition.row,
-	                    column: currentPosition.column,
+	                    x: currentPosition.x,
+	                    y: currentPosition.y,
 	                    direction: structures_1.rotateAntiClockWise.get(currentPosition.direction)
 	                };
 	            case "D":
 	                return {
-	                    row: currentPosition.row,
-	                    column: currentPosition.column,
+	                    x: currentPosition.x,
+	                    y: currentPosition.y,
 	                    direction: structures_1.rotateClockWise.get(currentPosition.direction)
 	                };
 	            case "A":
@@ -137,39 +133,39 @@
 	        switch (currentPosition.direction) {
 	            case "N":
 	                return {
-	                    row: currentPosition.row,
-	                    column: currentPosition.column + 1,
+	                    x: currentPosition.x,
+	                    y: currentPosition.y + 1,
 	                    direction: currentPosition.direction
 	                };
 	            case "E":
 	                return {
-	                    row: currentPosition.row + 1,
-	                    column: currentPosition.column,
+	                    x: currentPosition.x + 1,
+	                    y: currentPosition.y,
 	                    direction: currentPosition.direction
 	                };
 	            case "S":
 	                return {
-	                    row: currentPosition.row,
-	                    column: currentPosition.column - 1,
+	                    x: currentPosition.x,
+	                    y: currentPosition.y - 1,
 	                    direction: currentPosition.direction
 	                };
 	            case "W":
 	                return {
-	                    row: currentPosition.row - 1,
-	                    column: currentPosition.column,
+	                    x: currentPosition.x - 1,
+	                    y: currentPosition.y,
 	                    direction: currentPosition.direction
 	                };
 	        }
 	    }
-	    isExit(position) {
-	        if (position.column < 0 || position.column > this.context.maxY)
+	    isOut(position) {
+	        if (position.y < 0 || position.y > this.lawn.height
+	            || position.x < 0 || position.x > this.lawn.width) {
 	            return true;
-	        if (position.row < 0 || position.row > this.context.maxX)
-	            return true;
+	        }
 	        return false;
 	    }
 	}
-	exports.LawmMowerDriver = LawmMowerDriver;
+	exports.LawmMower = LawmMower;
 
 
 /***/ }),
@@ -178,6 +174,7 @@
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
+	;
 	exports.rotateClockWise = new Map();
 	exports.rotateClockWise.set("N", "E");
 	exports.rotateClockWise.set("E", "S");
