@@ -7,7 +7,7 @@ export interface IPosition {
     direction: Direction;
 }
 
-export interface Lawn {
+export interface ILawn {
     width: number;
     height: number;
 }

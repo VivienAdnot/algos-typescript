@@ -1,9 +1,9 @@
-import { IPosition, Move, IPath, Lawn, rotateClockWise, rotateAntiClockWise } from './structures';
+import { IPosition, Move, IPath, ILawn, rotateClockWise, rotateAntiClockWise } from './structures';
 
 export class LawmMower {
-    lawn: Lawn;
+    lawn: ILawn;
 
-    constructor(surface: Lawn) {
+    constructor(surface: ILawn) {
         this.lawn = surface;
     }
 
