@@ -1,5 +1,5 @@
 export type Direction = "N" | "E" | "S" | "W";
-export type Move = "G" | "D" | "A";
+export type Move = "L" | "R" | "F";
 
 export interface IPosition {
     x: number;

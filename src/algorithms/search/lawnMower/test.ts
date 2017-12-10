@@ -1,31 +1,31 @@
-import { LawmMower } from './drive';
+import { LawnMower } from './lawnMower';
 
 export function test_lawnMowerDriver() {
-    let lawmMowerA = new LawmMower({
+    let lawnMowerA = new LawnMower({
         width: 5,
         height: 5
     });
 
-    console.log(lawmMowerA.drive({
+    console.log(lawnMowerA.mow({
         initialPosition: {
             x: 1,
             y: 2,
             direction: 'N'
         },
-        moves: ['G', 'A', 'G', 'A', 'G', 'A', 'G', 'A', 'A']
+        moves: ['L', 'F', 'L', 'F', 'L', 'F', 'L', 'F', 'F']
     }));
 
-    let lawmMowerB = new LawmMower({
+    let lawnMowerB = new LawnMower({
         width: 5,
         height: 5
     });
     
-    console.log(lawmMowerB.drive({
+    console.log(lawnMowerB.mow({
         initialPosition: {
             x: 3,
             y: 3,
             direction: 'E'
         },
-        moves: ['A', 'A', 'D', 'A', 'A', 'D', 'A', 'D', 'D', 'A']
+        moves: ['F', 'F', 'R', 'F', 'F', 'R', 'F', 'R', 'R', 'F']
     }));
 };

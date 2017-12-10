@@ -1,13 +1,13 @@
 import { IPosition, Move, IPath, ILawn, rotateClockWise, rotateAntiClockWise } from './structures';
 
-export class LawmMower {
+export class LawnMower {
     lawn: ILawn;
 
     constructor(surface: ILawn) {
         this.lawn = surface;
     }
 
-    drive(path: IPath): IPosition {
+    mow(path: IPath): IPosition {
         let currentPosition = path.initialPosition;
         
         for (let move of path.moves) {
@@ -25,19 +25,19 @@ export class LawmMower {
 
     private rotateOrMoveForward(currentPosition: IPosition, movement: Move): IPosition {
         switch(movement) {
-            case "G":
+            case "L":
                 return {
                     x: currentPosition.x,
                     y: currentPosition.y,
                     direction: rotateAntiClockWise.get(currentPosition.direction)!
                 }
-            case "D":
+            case "R":
                 return {
                     x: currentPosition.x,
                     y: currentPosition.y,
                     direction: rotateClockWise.get(currentPosition.direction)!
                 }
-            case "A":
+            case "F":
                 return this.moveForward(currentPosition);
         }
     }

@@ -56,31 +56,31 @@
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	const drive_1 = __webpack_require__(2);
+	const lawnMower_1 = __webpack_require__(2);
 	function test_lawnMowerDriver() {
-	    let lawmMowerA = new drive_1.LawmMower({
+	    let lawnMowerA = new lawnMower_1.LawnMower({
 	        width: 5,
 	        height: 5
 	    });
-	    console.log(lawmMowerA.drive({
+	    console.log(lawnMowerA.mow({
 	        initialPosition: {
 	            x: 1,
 	            y: 2,
 	            direction: 'N'
 	        },
-	        moves: ['G', 'A', 'G', 'A', 'G', 'A', 'G', 'A', 'A']
+	        moves: ['L', 'F', 'L', 'F', 'L', 'F', 'L', 'F', 'F']
 	    }));
-	    let lawmMowerB = new drive_1.LawmMower({
+	    let lawnMowerB = new lawnMower_1.LawnMower({
 	        width: 5,
 	        height: 5
 	    });
-	    console.log(lawmMowerB.drive({
+	    console.log(lawnMowerB.mow({
 	        initialPosition: {
 	            x: 3,
 	            y: 3,
 	            direction: 'E'
 	        },
-	        moves: ['A', 'A', 'D', 'A', 'A', 'D', 'A', 'D', 'D', 'A']
+	        moves: ['F', 'F', 'R', 'F', 'F', 'R', 'F', 'R', 'R', 'F']
 	    }));
 	}
 	exports.test_lawnMowerDriver = test_lawnMowerDriver;
@@ -94,11 +94,11 @@
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
 	const structures_1 = __webpack_require__(3);
-	class LawmMower {
+	class LawnMower {
 	    constructor(surface) {
 	        this.lawn = surface;
 	    }
-	    drive(path) {
+	    mow(path) {
 	        let currentPosition = path.initialPosition;
 	        for (let move of path.moves) {
 	            let nextPosition = this.rotateOrMoveForward(currentPosition, move);
@@ -113,19 +113,19 @@
 	    }
 	    rotateOrMoveForward(currentPosition, movement) {
 	        switch (movement) {
-	            case "G":
+	            case "L":
 	                return {
 	                    x: currentPosition.x,
 	                    y: currentPosition.y,
 	                    direction: structures_1.rotateAntiClockWise.get(currentPosition.direction)
 	                };
-	            case "D":
+	            case "R":
 	                return {
 	                    x: currentPosition.x,
 	                    y: currentPosition.y,
 	                    direction: structures_1.rotateClockWise.get(currentPosition.direction)
 	                };
-	            case "A":
+	            case "F":
 	                return this.moveForward(currentPosition);
 	        }
 	    }
@@ -165,7 +165,7 @@
 	        return false;
 	    }
 	}
-	exports.LawmMower = LawmMower;
+	exports.LawnMower = LawnMower;
 
 
 /***/ }),
