@@ -1,3 +1,3 @@
- import { test_lawnMowerDriver } from "./algorithms/search/lawnMower/test";
+ import { test_lawnMower } from "./algorithms/search/lawnMower/test";
 
- test_lawnMowerDriver();
+ test_lawnMower();

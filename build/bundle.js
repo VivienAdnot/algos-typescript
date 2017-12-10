@@ -47,7 +47,7 @@
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
 	const test_1 = __webpack_require__(1);
-	test_1.test_lawnMowerDriver();
+	test_1.test_lawnMower();
 
 
 /***/ }),
@@ -57,7 +57,7 @@
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
 	const lawnMower_1 = __webpack_require__(2);
-	function test_lawnMowerDriver() {
+	function test_lawnMower() {
 	    let lawnMowerA = new lawnMower_1.LawnMower({
 	        width: 5,
 	        height: 5
@@ -83,7 +83,7 @@
 	        moves: ['F', 'F', 'R', 'F', 'F', 'R', 'F', 'R', 'R', 'F']
 	    }));
 	}
-	exports.test_lawnMowerDriver = test_lawnMowerDriver;
+	exports.test_lawnMower = test_lawnMower;
 	;
 
 
@@ -95,8 +95,8 @@
 	Object.defineProperty(exports, "__esModule", { value: true });
 	const structures_1 = __webpack_require__(3);
 	class LawnMower {
-	    constructor(surface) {
-	        this.lawn = surface;
+	    constructor(lawn) {
+	        this.lawn = lawn;
 	    }
 	    mow(path) {
 	        let currentPosition = path.initialPosition;

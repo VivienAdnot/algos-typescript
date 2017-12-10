@@ -1,6 +1,6 @@
 import { LawnMower } from './lawnMower';
 
-export function test_lawnMowerDriver() {
+export function test_lawnMower() {
     let lawnMowerA = new LawnMower({
         width: 5,
         height: 5

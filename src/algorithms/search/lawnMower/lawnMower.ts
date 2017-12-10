@@ -3,8 +3,8 @@ import { IPosition, Move, IPath, ILawn, rotateClockWise, rotateAntiClockWise } f
 export class LawnMower {
     lawn: ILawn;
 
-    constructor(surface: ILawn) {
-        this.lawn = surface;
+    constructor(lawn: ILawn) {
+        this.lawn = lawn;
     }
 
     mow(path: IPath): IPosition {
